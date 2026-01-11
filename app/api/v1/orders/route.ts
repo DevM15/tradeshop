@@ -4,7 +4,7 @@ import { connectDB } from "@/lib/db";
 import { requireRole } from "@/lib/requireRole";
 import { createOrderSchema } from "@/validators/order.schema";
 import { Product } from "@/models/Product";
-import { Order } from "@/models/Order";
+import Order from "@/models/Order";
 
 export async function POST(req: Request) {
   try {

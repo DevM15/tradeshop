@@ -155,6 +155,22 @@ Visit http://localhost:3000
 
 ---
 
+## Scalability
+
+- **Microservices**: Split into independent services (Auth, Products, Orders) behind an API gateway to enable autonomous scaling and fault isolation.
+- **API Gateway/Ingress**: Use NGINX/Envoy for TLS termination, routing, rate limiting, and WAF. Centralize cross-cutting concerns.
+- **Caching**: Introduce Redis for hot paths (product list, stock lookups). Apply cache invalidation on mutations; leverage `Cache-Control`/ETag and CDN edge caching for public GET `/api/v1/products`.
+- **Message Queue**: Use Kafka/RabbitMQ for async workflows (order fulfillment, notifications, audit logs) to decouple processing from requests.
+- **Database Scaling**: Read replicas for GET traffic, sharding/partitioning for large datasets, and separate DBs per service to reduce contention. Use connection pooling.
+- **Load Balancing**: Horizontally scale services with containers (Docker) and Kubernetes; apply cloud load balancers to distribute traffic across pods/regions.
+- **Observability**: Centralized logs (ELK/OpenSearch), metrics (Prometheus/Grafana), and tracing (OpenTelemetry). Define SLOs and alerting.
+- **Resilience**: Implement retries with jitter, circuit breakers, timeouts, bulkheads, and graceful shutdown. Health/readiness probes per service.
+- **Security**: mTLS between services, secret management (Vault/KMS), JWT rotation/short TTLs, scoped RBAC, and per-route policies.
+- **CI/CD**: Automated pipelines, canary/blue‑green deploys, and migration safety checks. Feature flags for progressive delivery.
+- **CDN & Edge**: Serve static assets via CDN; cache public API responses at the edge with appropriate TTLs.
+
+---
+
 ## Quick Test (cURL)
 
 ```bash

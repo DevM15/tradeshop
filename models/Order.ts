@@ -1,4 +1,4 @@
-import { Schema, model, Types, Document } from "mongoose";
+import { Schema, model, models, Types, Document } from "mongoose";
 
 export type OrderStatus =
   | "pending"
@@ -54,4 +54,4 @@ const orderSchema = new Schema<OrderDocument>(
   }
 );
 
-export const Order = model<OrderDocument>("Order", orderSchema);
+export default models.Order || model("Order", orderSchema);
